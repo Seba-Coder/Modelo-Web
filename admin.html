@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - InkaGrill</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon_io/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon_io/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="img/favicon_io/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="img/favicon_io/android-chrome-512x512.png">
+    <link rel="manifest" href="img/favicon_io/site.webmanifest">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <button id="sidebarToggle" class="sidebar-toggle" aria-label="Abrir/cerrar menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo" aria-label="InkaGrill - Admin">
+                <i class="fas fa-fire"></i>
+                <span class="logo-text">InkaGrill - Admin</span>
+            </div>
+            <a href="landing.html" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Volver al Sitio
+            </a>
+        </div>
+    </nav>
+
+    <!-- Notification Banner (oculto por defecto) -->
+    <div id="notificationBanner" class="notification-banner">
+        <i class="notification-icon fas fa-bell"></i>
+        <div class="notification-content">
+            <h4 id="notificationTitle"></h4>
+            <p id="notificationMessage"></p>
+        </div>
+        <button class="notification-close" onclick="hideNotification()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar collapsed">
+            <ul class="sidebar-menu">
+                <li>
+                    <button class="sidebar-link active" data-section="reservations">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Reservas</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="sidebar-link" data-section="menu">
+                        <i class="fas fa-utensils"></i>
+                        <span>Gestión de Menú</span>
+                    </button>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Reservations Section -->
+            <section id="reservations-section" class="content-section active">
+                <div class="section-header">
+                    <h1>Gestión de Reservas</h1>
+                    <div class="filters">
+                        <input type="text" id="searchReservations" class="filter-input search-input" placeholder="Buscar por nombre, email o teléfono...">
+                        <select id="statusFilter" class="filter-select">
+                            <option value="all">Todos los Estados</option>
+                            <option value="pending">Pendiente</option>
+                            <option value="confirmed">Confirmada</option>
+                            <option value="cancelled">Cancelada</option>
+                        </select>
+                        <input type="date" id="dateFilter" class="filter-input">
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-calendar-alt stat-icon"></i>
+                        <div class="stat-info">
+                            <h3 id="totalReservations">0</h3>
+                            <p>Total Reservas</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-clock stat-icon pending"></i>
+                        <div class="stat-info">
+                            <h3 id="pendingReservations">0</h3>
+                            <p>Pendientes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle stat-icon confirmed"></i>
+                        <div class="stat-info">
+                            <h3 id="confirmedReservations">0</h3>
+                            <p>Confirmadas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="reservations-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Personas</th>
+                                <th>Mensaje</th>
+                                <th>Estado</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="reservationsTable">
+                            <tr>
+                                <td colspan="9" class="loading">Cargando reservas...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Menu Management Section -->
+            <section id="menu-section" class="content-section">
+                <div class="section-header">
+                    <h1>Gestión de Menú</h1>
+                    <div class="menu-header-actions">
+                        <input type="text" id="searchMenu" class="filter-input search-input" placeholder="Buscar categoría o plato...">
+                        <button class="btn btn-primary" id="addCategoryBtn">
+                            <i class="fas fa-plus"></i> Agregar Categoría
+                        </button>
+                    </div>
+                </div>
+
+                <div id="menuManagement" class="menu-management">
+                    <p class="loading">Cargando menú...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Reservation Details -->
+    <div id="reservationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Detalles de la Reserva</h2>
+            <div id="reservationDetails"></div>
+        </div>
+    </div>
+
+    <!-- Modal for Add/Edit Category -->
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="categoryModalTitle">Agregar Categoría</h2>
+            <form id="categoryForm">
+                <div class="form-group">
+                    <label for="categoryName">Nombre de la Categoría</label>
+                    <input type="text" id="categoryName" required>
+                </div>
+                <input type="hidden" id="categoryId">
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-save">Guardar</button>
+                    <button type="button" class="btn btn-cancel" onclick="closeCategoryModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Add/Edit Dish -->
+    <div id="dishModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="dishModalTitle">Agregar Plato</h2>
+            <form id="dishForm">
+                <input type="hidden" id="dishCategoryId">
+                <input type="hidden" id="dishId">
+                <div class="form-group">
+                    <label for="dishName">Nombre del Plato</label>
+                    <input type="text" id="dishName" required>
+                </div>
+                <div class="form-group">
+                    <label for="dishDescription">Descripción</label>
+                    <textarea id="dishDescription" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="dishPrice">Precio</label>
+                    <input type="number" id="dishPrice" step="0.01" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-save">Guardar</button>
+                    <button type="button" class="btn btn-cancel" onclick="closeDishModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

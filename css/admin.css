@@ -1,0 +1,931 @@
+:root {
+  --primary: #c94d2a;
+  --primary-dark: #a33d1f;
+  --secondary: #2c5530;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --background: #f5f5f5;
+  --surface: #ffffff;
+  --text: #2d2d2d;
+  --text-light: #666666;
+  --border: #e0e0e0;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Navbar */
+.navbar {
+  background: var(--surface);
+  box-shadow: 0 2px 10px var(--shadow);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Full-width container only for navbar to avoid side margins */
+.navbar .container {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 1rem 20px;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 20px;
+  gap: 1rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  text-decoration: none;
+  flex: 1;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: white;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.btn-secondary:hover {
+  background: #1f3d23;
+}
+
+.btn-success {
+  background: var(--success);
+  color: white;
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.btn-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Admin Container */
+.admin-container {
+  display: flex;
+  margin-top: 70px;
+  min-height: calc(100vh - 70px);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: var(--surface);
+  box-shadow: 2px 0 10px var(--shadow);
+  padding: 2rem 0;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: sticky;
+  top: 70px;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+  padding: 1rem 0;
+}
+
+.sidebar-menu {
+  list-style: none;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 2rem;
+  border: none;
+  background: none;
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.sidebar.collapsed .sidebar-link {
+  padding: 1rem 0;
+  justify-content: center;
+  gap: 0;
+}
+
+.sidebar-link span {
+  transition: opacity 0.2s ease;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.sidebar.collapsed .sidebar-link span {
+  opacity: 0;
+  width: 0;
+  display: none;
+}
+
+.sidebar-link:hover {
+  background: var(--background);
+  color: var(--primary);
+}
+
+.sidebar-link.active {
+  background: var(--primary);
+  color: white;
+  border-left: 4px solid var(--primary-dark);
+}
+
+.sidebar.collapsed .sidebar-link.active {
+  border-left: none;
+  border-bottom: 4px solid var(--primary-dark);
+}
+
+.sidebar-link i {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  min-width: 1.2rem;
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+  display: block;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+  margin-right: 0;
+}
+
+.sidebar-toggle:hover {
+  color: var(--primary-dark);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.content-section {
+  display: none;
+}
+
+.content-section.active {
+  display: block;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.section-header h1 {
+  color: var(--text);
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+}
+
+.filter-select,
+.filter-input {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.search-input {
+  min-width: 300px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.menu-header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--surface);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  color: var(--primary);
+}
+
+.stat-icon.pending {
+  color: var(--warning);
+}
+
+.stat-icon.confirmed {
+  color: var(--success);
+}
+
+.stat-info h3 {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+.stat-info p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+/* Table */
+.table-container {
+  background: var(--surface);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px var(--shadow);
+  overflow-x: auto;
+}
+
+.reservations-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.reservations-table th {
+  background: var(--primary);
+  color: white;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.reservations-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.reservations-table tr:hover {
+  background: var(--background);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-confirmed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-select-inline {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background: white;
+  color: var(--text-dark);
+}
+
+.confirm-status-btn,
+.cancel-status-btn {
+  padding: 0.4rem 0.6rem;
+}
+
+.confirm-status-btn i {
+  color: #28a745;
+}
+
+.cancel-status-btn i {
+  color: #dc3545;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-light);
+}
+
+/* Menu Management */
+.menu-management {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.category-card {
+  background: var(--surface);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px var(--shadow);
+  padding: 1.5rem;
+}
+
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.category-title {
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+.category-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dishes-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.dish-item {
+  background: var(--background);
+  padding: 1rem;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dish-info h4 {
+  margin-bottom: 0.25rem;
+}
+
+.dish-info p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.dish-price {
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.dish-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.reorder-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-right: 0.5rem;
+}
+
+.btn-icon {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.btn-save {
+  background: #2c5530;
+  color: white;
+}
+
+.btn-save:hover {
+  background: #1f3d23;
+}
+
+.btn-cancel {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background: #c82333;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: var(--surface);
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-light);
+}
+
+.close:hover {
+  color: var(--text);
+}
+
+.modal-content h2 {
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+/* Notification Banner */
+.notification-banner {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transform: translateX(400px);
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 9999;
+  max-width: 350px;
+}
+
+.notification-banner.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notification-banner.success {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.notification-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-content h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.notification-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.95;
+}
+
+.notification-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.notification-close:hover {
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .main-content {
+    padding: 1.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .reservations-table {
+    font-size: 0.9rem;
+  }
+
+  .reservations-table th,
+  .reservations-table td {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-toggle {
+    display: block;
+  }
+
+  .admin-container {
+    flex-direction: column;
+    position: relative;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -250px;
+    top: 70px;
+    height: calc(100vh - 70px);
+    z-index: 999;
+    transition: left 0.3s ease;
+    padding: 1rem 0;
+    overflow-y: auto;
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .sidebar.collapsed {
+    width: 250px;
+    left: -250px;
+  }
+
+  .sidebar.collapsed.active {
+    left: 0;
+  }
+
+  .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-link {
+    padding: 1rem 2rem;
+    white-space: normal;
+    justify-content: flex-start;
+  }
+
+  .sidebar.collapsed .sidebar-link {
+    padding: 1rem;
+    justify-content: center;
+  }
+
+  .sidebar.collapsed.active .sidebar-link {
+    padding: 1rem 2rem;
+    justify-content: flex-start;
+  }
+
+  .sidebar.collapsed.active .sidebar-link span {
+    opacity: 1;
+    width: auto;
+    display: inline-block;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .filters {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .filter-select,
+  .filter-input {
+    width: 100%;
+  }
+
+  .search-input {
+    min-width: 100%;
+  }
+
+  .menu-header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .menu-header-actions .search-input,
+  .menu-header-actions .btn {
+    width: 100%;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .stat-icon {
+    font-size: 2rem;
+  }
+
+  .stat-info h3 {
+    font-size: 1.5rem;
+  }
+
+  .stat-info p {
+    font-size: 0.85rem;
+  }
+
+  .reservations-table {
+    font-size: 0.75rem;
+  }
+
+  .reservations-table th,
+  .reservations-table td {
+    padding: 0.5rem 0.25rem;
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-sm {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .category-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .category-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .category-actions .btn {
+    width: 100%;
+  }
+
+  .dish-item {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .dish-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .modal-content {
+    width: 95%;
+    max-width: 100%;
+  }
+
+  .notification-banner {
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+
+  .logo-text {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 1rem;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  .nav-container {
+    padding: 0.75rem 10px;
+    gap: 0.75rem;
+  }
+
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .main-content {
+    padding: 0.75rem;
+  }
+
+  .section-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .sidebar-link {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .sidebar-link i {
+    font-size: 1rem;
+  }
+
+  .reservations-table {
+    font-size: 0.7rem;
+  }
+
+  .reservations-table th,
+  .reservations-table td {
+    padding: 0.4rem 0.1rem;
+  }
+
+  .status-badge {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .btn-sm {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.7rem;
+  }
+
+  .stat-card {
+    padding: 0.75rem;
+  }
+
+  .stat-icon {
+    font-size: 1.5rem;
+  }
+
+  .stat-info h3 {
+    font-size: 1.25rem;
+  }
+
+  .notification-banner {
+    top: 60px;
+    font-size: 0.9rem;
+  }
+
+  .notification-content h4 {
+    font-size: 0.9rem;
+  }
+
+  .notification-content p {
+    font-size: 0.8rem;
+  }
+}
